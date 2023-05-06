@@ -18,6 +18,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.shapes
@@ -29,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.KeyboardType
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,6 +87,16 @@ fun ClientPage(navHostController: NavHostController,activity: MainActivity){
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.TopCenter
                 ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                        var value by remember { mutableStateOf(0) }
+                        CustomComponent(indicatorValue = value)
+                        TextField(value = value.toString(), onValueChange = {
+                            value = if(it.isNotEmpty()){
+                                it.toInt()
+                            }
+                            else{0}
+                        }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+                    }
                     Image(
                         painter = painterResource(id = R.drawable.svg_water_wave_animation),
                         contentDescription = "design",
@@ -98,25 +110,24 @@ fun ClientPage(navHostController: NavHostController,activity: MainActivity){
                 }
             })
     }
-    LoadingScreen()
 }
 
-@Composable
-fun LoadingScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center),
-            color = "#6f43fa".color,
-            strokeWidth = 10.dp
-        )
-        Text(
-            text = "Receiving",
-            color = Color.DarkGray,
-            fontSize = 15.sp,
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
-}
+//@Composable
+//fun LoadingScreen() {
+//    Box(modifier = Modifier.fillMaxSize()) {
+//        CircularProgressIndicator(
+//            modifier = Modifier.align(Alignment.Center),
+//            color = "#6f43fa".color,
+//            strokeWidth = 5.dp
+//        )
+//        Text(
+//            text = "Receiving",
+//            color = Color.DarkGray,
+//            fontSize = 15.sp,
+//            modifier = Modifier.align(Alignment.Center)
+//        )
+//    }
+//}
 
 
 //@Composable
